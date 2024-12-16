@@ -1,12 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, { useState, useEffect } from 'react';
 import './App.css'
 import MainView from './MainView';
+import NoteList from './NoteList';
+import NoteSession from './NoteSession';
+import CourseManager from './CourseManager';
 
 function App() {
   return (
-    <MainView></MainView>
+    <div>
+      <MainView />
+    </div>
   )
 }
 

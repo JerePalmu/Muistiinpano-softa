@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
+import NoteList from './NoteList';
+import NoteSession from './NoteSession';
+import CourseManager from './CourseManager';
 
-const MainView = () => {
+function MainView() {
+  const [currentView, setCurrentView] = useState('list');
+
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>NotesApp</h1>
-      <div style={styles.buttonsContainer}>
-        <button style={styles.button}>Create notes for class</button>
-        <button style={styles.button}>List notes</button>
-        <button style={styles.button}>Add courses</button>
-      </div>
+    <div>
+      <h1>NotesApp</h1>
+      <nav>
+        <button style={styles.button} onClick={() => setCurrentView('list')}>Create notes for class</button>
+        <button style={styles.button} onClick={() => setCurrentView('session')}>List notes</button>
+        <button style={styles.button} onClick={() => setCurrentView('courses')}>Add courses</button>
+      </nav>
+      <hr />
+      {currentView === 'list' && <NoteList />}
+      {currentView === 'session' && <NoteSession />}
+      {currentView === 'courses' && <CourseManager />}
     </div>
   );
-};
+}
+
 
 const styles = {
     container: {
