@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 function NoteSession() {
   const [courses, setCourses] = useState([]);
@@ -8,40 +7,43 @@ function NoteSession() {
   const [sessionNotes, setSessionNotes] = useState([]);
 
   useEffect(() => {
-    fetchCourses();
+    const storedCourses = JSON.parse(sessionStorage.getItem('courses')) || [];
+    setCourses(storedCourses);
+    const storedNotes = JSON.parse(sessionStorage.getItem('sessionNotes')) || [];
+    setSessionNotes(storedNotes);
   }, []);
 
-  const fetchCourses = async () => {
-    const response = await axios.get('http://localhost:5000/courses');
-    setCourses(response.data);
+  const getNextNoteId = () => {
+    let lastId = parseInt(sessionStorage.getItem('lastNoteId')) || 0;
+    const nextId = lastId + 1;
+    sessionStorage.setItem('lastNoteId', nextId);
+    return nextId;
   };
 
-  const saveNote = async () => {
-    if (text.trim()) {
-      const response = await axios.post('http://localhost:5000/notes', {
-        text,
-        courseId: selectedCourse,
-      });
-      setSessionNotes([...sessionNotes, response.data]);
+  const saveNote = () => {
+    if (text.trim() && selectedCourse) {
+      const newNote = { id: getNextNoteId(), text, courseId: selectedCourse, timestamp: new Date().toLocaleString() };
+      const updatedNotes = [...sessionNotes, newNote];
+      setSessionNotes(updatedNotes);
+      sessionStorage.setItem('sessionNotes', JSON.stringify(updatedNotes));
+
       setText('');
     }
   };
 
   return (
     <div>
-      <h2>New note</h2>
+      <h2>New Note</h2>
       {courses.length === 0 ? (
         <p>Add courses first!</p>
       ) : (
         <>
-          {!sessionNotes.length && (
-            <select onChange={(e) => setSelectedCourse(e.target.value)} value={selectedCourse}>
-              <option value="">Choose a course</option>
-              {courses.map(course => (
-                <option key={course.id} value={course.id}>{course.name}</option>
-              ))}
-            </select>
-          )}
+          <select onChange={(e) => setSelectedCourse(e.target.value)} value={selectedCourse}>
+            <option value="">Choose a course</option>
+            {courses.map(course => (
+              <option key={course.id} value={course.id}>{course.name}</option>
+            ))}
+          </select>
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -50,7 +52,9 @@ function NoteSession() {
           <button onClick={saveNote}>Save</button>
           <ul>
             {sessionNotes.map(note => (
-              <li key={note.id}>{note.text}</li>
+              <li key={note.id}>
+                {note.text} ({note.timestamp})
+              </li>
             ))}
           </ul>
         </>

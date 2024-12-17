@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 function NoteList() {
   const [notes, setNotes] = useState([]);
@@ -7,25 +6,22 @@ function NoteList() {
   const [selectedCourse, setSelectedCourse] = useState('');
 
   useEffect(() => {
-    fetchNotes();
-    fetchCourses();
-  }, [selectedCourse]);
+    const storedNotes = JSON.parse(sessionStorage.getItem('sessionNotes')) || [];
+    const storedCourses = JSON.parse(sessionStorage.getItem('courses')) || [];
 
-  const fetchNotes = async () => {
-    const response = await axios.get('http://localhost:5000/notes', {
-      params: { courseId: selectedCourse },
-    });
-    setNotes(response.data);
-  };
+    setNotes(storedNotes);
+    setCourses(storedCourses);
+  }, []);
 
-  const fetchCourses = async () => {
-    const response = await axios.get('http://localhost:5000/courses');
-    setCourses(response.data);
-  };
+  const filteredNotes = selectedCourse
+    ? notes.filter(note => note.courseId === selectedCourse)
+    : notes;
 
-  const deleteNote = async (id) => {
-    await axios.delete(`http://localhost:5000/notes/${id}`);
-    fetchNotes();
+  const deleteNote = (id) => {
+    const updatedNotes = notes.filter(note => note.id !== id);
+    setNotes(updatedNotes);
+
+    sessionStorage.setItem('sessionNotes', JSON.stringify(updatedNotes));
   };
 
   return (
@@ -38,10 +34,10 @@ function NoteList() {
         ))}
       </select>
       <ul>
-        {notes.length === 0 ? (
+        {filteredNotes.length === 0 ? (
           <p>No notes!</p>
         ) : (
-          notes.map(note => (
+          filteredNotes.map(note => (
             <li key={note.id}>
               {note.text} ({note.timestamp})
               <button onClick={() => deleteNote(note.id)}>Delete</button>
