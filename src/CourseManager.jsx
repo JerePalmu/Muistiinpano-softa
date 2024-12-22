@@ -32,6 +32,24 @@ function CourseManager() {
     setName('');
   };
 
+  let content;
+  if (courses.length === 0) {
+    content = <p>No courses available.</p>;
+  } else {
+    content = (
+      <>
+        <h3>Courses</h3>
+        <ul>
+          {courses.map((course) => (
+            <li key={course.id}>
+              {course.id}: {course.name}
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  }
+
   return (
     <div>
       <h2>Add a Course</h2>
@@ -43,14 +61,7 @@ function CourseManager() {
       />
       <button onClick={addCourse}>Add</button>
       {message && <p>{message}</p>}
-      <h3>Courses</h3>
-      <ul>
-        {courses.map((course) => (
-          <li key={course.id}>
-            {course.id}: {course.name}
-          </li>
-        ))}
-      </ul>
+      {content}
     </div>
   );
 }

@@ -1,24 +1,16 @@
-import React, { useState } from 'react';
-import './MainView.css';  // Import the CSS file
-import NoteList from './NoteList';
-import NoteSession from './NoteSession';
-import CourseManager from './CourseManager';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './App.css';
 
 function MainView() {
-  const [currentView, setCurrentView] = useState('list');
-
   return (
     <div className="container">
       <h1 className="title">NotesApp</h1>
       <nav className="buttonsContainer">
-        <button className="button" onClick={() => setCurrentView('list')}>Create notes for class</button>
-        <button className="button" onClick={() => setCurrentView('session')}>List notes</button>
-        <button className="button" onClick={() => setCurrentView('courses')}>Add courses</button>
+        <Link to="/notelist" className="button">Create notes for class</Link>
+        <Link to="/notesession" className="button">List notes</Link>
+        <Link to="/coursemanager" className="button">Add courses</Link>
       </nav>
-      <hr />
-      {currentView === 'list' && <NoteList />}
-      {currentView === 'session' && <NoteSession />}
-      {currentView === 'courses' && <CourseManager />}
     </div>
   );
 }
