@@ -42,12 +42,12 @@ function NoteSession() {
             <option key={course.id} value={course.id}>{course.name}</option>
           ))}
         </select>
-        <textarea
+        <textarea className="textarea"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Write a note..."
         />
-        <button onClick={saveNote}>Save</button>
+        <button className="button2" onClick={saveNote}>Save</button>
         <ul>
           {sessionNotes.map(note => (
             <li key={note.id}>

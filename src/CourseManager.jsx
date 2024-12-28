@@ -53,13 +53,13 @@ function CourseManager() {
   return (
     <div>
       <h2>Add a Course</h2>
-      <input
+      <input className="courseInput"
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Name of the course"
       />
-      <button onClick={addCourse}>Add</button>
+      <button className="button2" onClick={addCourse}>Add</button>
       {message && <p>{message}</p>}
       {content}
     </div>

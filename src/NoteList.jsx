@@ -31,7 +31,7 @@ function NoteList() {
         {filteredNotes.map((note) => (
           <li key={note.id}>
             {note.text} ({note.timestamp})
-            <button onClick={() => deleteNote(note.id)}>Delete</button>
+            <button className="buttonList" onClick={() => deleteNote(note.id)}>Delete</button>
           </li>
         ))}
       </ul>
