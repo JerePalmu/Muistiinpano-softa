@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import MainView from './MainView';
 import NoteList from './NoteList';
-import NoteSession from './NoteSession';
+import NoteSession from './Notes';
 import CourseManager from './CourseManager';
 
 function App() {
