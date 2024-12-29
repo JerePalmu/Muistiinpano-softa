@@ -27,23 +27,26 @@ function NoteList() {
     content = <p>No notes!</p>;
   } else {
     content = (
-      <ul>
+      <div>
         {filteredNotes.map((note) => {
           const course = courses.find((c) => String(c.id) === String(note.courseId));
           const courseName = course ? course.name : 'Unknown';
 
           return (
-            <li key={note.id}>
+            <p key={note.id}>
               <p>
-                <strong>{courseName} (ID: {note.courseId})</strong> {note.text} ({note.timestamp})
-              <button className="buttonList" onClick={() => deleteNote(note.id)}>
-                Delete
-              </button>
+                <strong>{courseName} (ID: {note.courseId})</strong> ({note.timestamp})
+                <button className="buttonList" onClick={() => deleteNote(note.id)}>
+                  Delete
+                </button>
+                <p className="textList">
+                  {note.text}
+                </p>
               </p>
-            </li>
+            </p>
           );
         })}
-      </ul>
+      </div>
     );
   }
 

@@ -39,13 +39,13 @@ function CourseManager() {
     content = (
       <>
         <h3>Courses</h3>
-        <ul>
+        <div>
           {courses.map((course) => (
             <li key={course.id}>
               {course.id}: {course.name}
             </li>
           ))}
-        </ul>
+        </div>
       </>
     );
   }
@@ -59,7 +59,7 @@ function CourseManager() {
         onChange={(e) => setName(e.target.value)}
         placeholder="Name of the course"
       />
-      <button className="button2" onClick={addCourse}>Add</button>
+      <button className="buttonCourse" onClick={addCourse}>Add</button>
       {message && <p>{message}</p>}
       {content}
     </div>

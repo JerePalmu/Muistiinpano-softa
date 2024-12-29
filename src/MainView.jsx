@@ -7,9 +7,9 @@ function MainView() {
     <div className="container">
       <h1 className="title">NotesApp</h1>
       <nav className="buttonsContainer">
-        <Link to="/notelist" className="button">List notes</Link>
-        <Link to="/notesession" className="button">Create notes</Link>
-        <Link to="/coursemanager" className="button">Add courses</Link>
+        <Link to="/notelist" className="buttonMain">List notes</Link>
+        <Link to="/notesession" className="buttonMain">Create notes</Link>
+        <Link to="/coursemanager" className="buttonMain">Add courses</Link>
       </nav>
     </div>
   );
