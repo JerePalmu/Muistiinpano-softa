@@ -42,7 +42,7 @@ function CourseManager() {
         <div>
           {courses.map((course) => (
             <li key={course.id}>
-              {course.id}: {course.name}
+              ID: {course.id} - {course.name}
             </li>
           ))}
         </div>
